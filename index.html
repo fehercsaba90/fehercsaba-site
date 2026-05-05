@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fehér Csaba Imre</title>
+  <meta name="description" content="Fehér Csaba Imre — Observer · Writer · Psychopomp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=UnifrakturMaguntia&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #0b0b0b;
+      --black-soft: #121111;
+      --ivory: #edeade;
+      --gold: #c6a15b;
+      --gold-soft: rgba(198, 161, 91, 0.35);
+      --purple: #2b1e3f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+
+      background:
+        linear-gradient(rgba(5,5,5,0.85), rgba(5,5,5,0.95)),
+        url("background.jpg"),
+        radial-gradient(circle at 50% 18%, rgba(198, 161, 91, 0.13), transparent 34%),
+        radial-gradient(circle at 80% 80%, rgba(43, 30, 63, 0.45), transparent 38%),
+        linear-gradient(180deg, #050505 0%, var(--black) 45%, #070707 100%);
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
+      color: var(--ivory);
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.13;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black, transparent 72%);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+    }
+
+    .container {
+      width: min(920px, 100%);
+      min-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 1px solid rgba(198, 161, 91, 0.18);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(18,17,17,0.72), rgba(8,8,8,0.72));
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55), inset 0 0 70px rgba(198, 161, 91, 0.035);
+      padding: clamp(32px, 7vw, 80px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sigil {
+      font-family: "Cinzel", serif;
+      font-size: clamp(34px, 7vw, 74px);
+      color: var(--gold);
+      margin-bottom: 24px;
+      text-shadow: 0 0 26px var(--gold-soft);
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    h1 {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: clamp(36px, 8vw, 84px);
+      line-height: 0.95;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      color: var(--gold);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: clamp(11px, 2vw, 14px);
+      margin-bottom: 48px;
+    }
+
+    .quote {
+      max-width: 680px;
+      font-family: "Cinzel", serif;
+      font-size: clamp(19px, 3vw, 31px);
+      line-height: 1.45;
+      color: rgba(237, 234, 222, 0.92);
+      margin-bottom: 56px;
+    }
+
+    .manifest {
+      max-width: 560px;
+      color: rgba(237, 234, 222, 0.72);
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    .gateways {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+
+    .gateways a {
+      color: var(--ivory);
+      text-decoration: none;
+      border: 1px solid rgba(198, 161, 91, 0.24);
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.025);
+      transition: transform 220ms ease, border-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .gateways a:hover,
+    .gateways a:focus {
+      color: var(--gold);
+      border-color: rgba(198, 161, 91, 0.7);
+      box-shadow: 0 0 28px rgba(198, 161, 91, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .tarot-panel {
+      display: none;
+      max-width: 620px;
+      margin: 8px auto 48px;
+      padding: clamp(24px, 5vw, 42px);
+      border: 1px solid rgba(198, 161, 91, 0.28);
+      border-radius: 24px;
+      background: radial-gradient(circle at center, rgba(198,161,91,0.08), rgba(0,0,0,0.26));
+      box-shadow: inset 0 0 42px rgba(198, 161, 91, 0.045), 0 0 46px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .tarot-panel:target {
+      display: block;
+      animation: reveal 900ms ease both;
+    }
+
+    .tarot-title {
+      font-family: "UnifrakturMaguntia", "Cinzel", serif;
+      font-size: clamp(34px, 7vw, 64px);
+      color: var(--gold);
+      margin-bottom: 14px;
+      text-shadow: 0 0 24px rgba(198, 161, 91, 0.22);
+    }
+
+    .tarot-status {
+      font-family: "Cinzel", serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(237, 234, 222, 0.78);
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .tarot-line {
+      font-family: "Cinzel", serif;
+      color: rgba(237, 234, 222, 0.92);
+      line-height: 1.7;
+      font-size: clamp(18px, 3vw, 26px);
+    }
+
+    .closing {
+      color: rgba(237, 234, 222, 0.42);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .smoke {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79, 48, 121, 0.32), transparent 68%);
+      filter: blur(24px);
+      top: 9%;
+      right: -120px;
+      animation: drift 16s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.78; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0) rotate(0deg); }
+      to { transform: translate3d(-80px, 60px, 0) rotate(24deg); }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 14px;
+      }
+
+      .container {
+        min-height: calc(100vh - 28px);
+        border-radius: 22px;
+      }
+
+      h1 {
+        letter-spacing: 0.06em;
+      }
+
+      .subtitle {
+        letter-spacing: 0.14em;
+      }
+
+      .gateways {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .gateways a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="container" aria-label="Fehér Csaba Imre kezdőoldal">
+      <div class="smoke" aria-hidden="true"></div>
+
+      <div class="sigil" aria-hidden="true">§</div>
+
+      <h1>Fehér<br>Csaba<br>Imre</h1>
+
+      <p class="subtitle">Observer · Writer · Psychopomp</p>
+
+      <p class="quote">
+        „Nem minden út vezet kifelé a barlangból.<br>
+        Van, amelyik befelé visz — és ott kezdődik minden.”
+      </p>
+
+      <div class="manifest">
+        <p>Nem keresek követőket.</p>
+        <p>Azokat keresem, akik már elindultak.</p>
+        <p>Ez a tér nem válaszokat ad — hanem kérdéseket tisztít le.</p>
+        <p>Ha érted, maradj. Ha nem, az is rendben van.</p>
+      </div>
+
+      <nav class="gateways" aria-label="Kapuk">
+        <a href="https://dawndrivebrand.com" target="_blank" rel="noopener noreferrer">↳ Dawn Drive</a>
+        <a href="#tarot">↳ Tarot Project</a>
+        <a href="#archive">↳ Archive</a>
+        <a href="mailto:hello@fehercsaba.hu">↳ Contact</a>
+      </nav>
+
+      <section id="tarot" class="tarot-panel" aria-label="Tarot Project">
+        <h2 class="tarot-title">Tarot Project</h2>
+        <p class="tarot-status">In progress.</p>
+        <p class="tarot-line">21 kulcs. Egy rendszer.<br>Nem minden ajtó nyílik egyszerre.</p>
+      </section>
+
+      <p class="closing">Signal received.</p>
+    </section>
+  </main>
+</body>
+</html>
